@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理后台 · 软件版本管理系统</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand">📦 软件版本管理 · 管理后台</div>
+    <div class="actions">
+      <a class="btn-link" href="client.html">👁 预览客户端</a>
+      <button class="btn-link" id="btnLogout">🚪 退出登录</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="stats">
+      <div class="stat-card">
+        <div class="num" id="statTotal">0</div>
+        <div class="label">项目总数</div>
+      </div>
+      <div class="stat-card">
+        <div class="num num-small" id="statLatest">—</div>
+        <div class="label">最新上传</div>
+      </div>
+      <div class="stat-card">
+        <div class="num num-small" id="statUpdated">—</div>
+        <div class="label">数据更新时间</div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <div class="search-box">
+        <input id="searchInput" placeholder="搜索项目名称 / 版本号 / README…">
+      </div>
+      <button class="btn btn-primary" id="btnAdd">➕ 新增项目</button>
+      <button class="btn" id="btnExport">📤 导出 data.js</button>
+      <button class="btn" id="btnImport">📥 导入 data.js</button>
+      <button class="btn" id="btnReset">🔄 重载仓库数据</button>
+      <button class="btn" id="btnGuide">🚀 发布指南</button>
+      <input type="file" id="importFile" accept=".js,.json" style="display:none">
+    </div>
+
+    <div class="table-card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>项目名称</th>
+              <th>上传日期</th>
+              <th>版本信息</th>
+              <th>README 信息</th>
+              <th>下载链接</th>
+              <th style="width:150px">操作</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 新增 / 编辑项目弹窗 -->
+  <div class="modal-overlay" id="editModal">
+    <div class="modal">
+      <h2 id="modalTitle">➕ 新增项目</h2>
+      <form id="editForm">
+        <div class="form-group">
+          <label>项目名称 *</label>
+          <input id="fName" placeholder="例如：金属浴智能温控系统上位机" required>
+        </div>
+        <div class="form-group">
+          <label>上传日期 *</label>
+          <input type="date" id="fDate" required>
+        </div>
+        <div class="form-group">
+          <label>版本信息</label>
+          <input id="fVersion" placeholder="例如：v1.0.0">
+        </div>
+        <div class="form-group">
+          <label>README 信息（支持多行）</label>
+          <textarea id="fReadme" placeholder="功能说明、更新日志、使用方法……"></textarea>
+        </div>
+        <div class="form-group">
+          <label>下载链接（百度网盘分享地址，建议带提取码）</label>
+          <input id="fDownload" placeholder="https://pan.baidu.com/s/xxxx?pwd=xxxx">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn" id="btnCancel">取消</button>
+          <button type="submit" class="btn btn-primary">保存</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 发布指南弹窗 -->
+  <div class="modal-overlay" id="guideModal">
+    <div class="modal">
+      <h2>🚀 发布指南：让线上网站显示最新数据</h2>
+      <div class="guide-list">
+        <p><b>方法一（推荐新手）：网页手动更新</b></p>
+        <p>1. 点击【📤 导出 data.js】下载最新数据文件；</p>
+        <p>2. 打开 GitHub 仓库 → 进入 data.js 文件 → 点右上角铅笔（编辑）；</p>
+        <p>3. 全选删除原内容，粘贴新文件的全部内容；</p>
+        <p>4. 点 Commit changes 提交，等待约 1 分钟，线上自动更新。</p>
+        <p><b>方法二：GitHub Desktop / 命令行</b></p>
+        <p>把导出的 data.js 放进本地仓库文件夹，提交并推送（git add / commit / push）即可。</p>
+        <p style="color:#8a93a6;font-size:13px">💡 提示：后台的修改先保存在"你自己的浏览器"里；只有更新了 GitHub 仓库中的 data.js，其他人才能看到最新数据。</p>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="guideClose">我知道了</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
