@@ -129,11 +129,14 @@ function escapeHtml(str) {
     .replace(/'/g, "&#39;");
 }
 
-// 规范化下载链接：缺少 http/https 前缀时自动补全，避免点击后跳到错误页面
+// 规范化下载链接：
+// 1) 若粘贴的是整段网盘分享文案，自动提取其中的第一个网页链接
+// 2) 缺少 http/https 前缀时自动补全，避免点击后跳到错误页面
 function normalizeUrl(u) {
   const s = String(u == null ? "" : u).trim();
   if (!s) return "";
-  if (/^https?:\/\//i.test(s)) return s;
+  const m = s.match(/https?:\/\/[^\s"'<>（）【】]+/);
+  if (m) return m[0].replace(/[，。；、）】]+$/, "");
   return "https://" + s.replace(/^\/+/, "");
 }
 
