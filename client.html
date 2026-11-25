@@ -22,25 +22,14 @@
       </div>
     </div>
 
-    <div class="table-card">
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>项目名称</th>
-              <th>上传日期</th>
-              <th>版本信息</th>
-              <th>屏幕版本</th>
-              <th>README 信息</th>
-              <th>下载链接</th>
-            </tr>
-          </thead>
-          <tbody id="tableBody"></tbody>
-        </table>
-      </div>
+    <div class="list-summary">
+      共 <b id="sumProjects">0</b> 个项目 · <b id="sumVersions">0</b> 个版本
+      <span class="sum-tip">同名项目已自动归拢为一个卡片，点击卡片标题可展开历史版本</span>
     </div>
 
-    <p class="hint">💡 点击【⬇ 下载】跳转百度网盘（提取码已包含在链接中）；点击【📖 查看】阅读该项目的 README 说明。</p>
+    <div id="groupList"></div>
+
+    <p class="hint">💡 点【⬇ 下载】跳转百度网盘（提取码已包含在链接中）；点【📖 说明 / 查看】阅读 README 说明。</p>
   </div>
 
   <script src="data.js"></script>
