@@ -73,15 +73,20 @@ function resetLocalData() {
   localStorage.removeItem(DATA_KEY);
 }
 
-// 导出 data.js：用当前最新数据生成文件并下载
-function exportDataJs() {
+// 生成 data.js 文件内容（导出下载与一键发布共用）
+function makeDataJsContent() {
   const data = loadData();
-  const content =
+  return (
     "// data.js —— 软件版本管理网站数据文件\n" +
     "// 本文件由管理后台于 " + new Date().toLocaleString("zh-CN") + " 自动导出\n" +
     "// 用法：在 GitHub 仓库中打开 data.js → 编辑 → 用本文件全部内容替换 → Commit，约 1 分钟后线上生效\n" +
-    "const PROJECTS_DATA = " + JSON.stringify(data, null, 2) + ";\n";
-  downloadFile("data.js", content, "text/javascript;charset=utf-8");
+    "const PROJECTS_DATA = " + JSON.stringify(data, null, 2) + ";\n"
+  );
+}
+
+// 导出 data.js：用当前最新数据生成文件并下载
+function exportDataJs() {
+  downloadFile("data.js", makeDataJsContent(), "text/javascript;charset=utf-8");
 }
 
 // 导入 data.js / .json 数据文件

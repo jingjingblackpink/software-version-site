@@ -233,7 +233,7 @@
         const m = (remote.projects || []).length;
         document.getElementById("unpubText").textContent =
           "⚠️ 有修改尚未发布到线上：本浏览器已显示 " + n + " 个项目，但线上仍是 " + m +
-          " 个——其他设备 / 其他浏览器暂时看不到你的新数据！请点【📤 导出 data.js】，再更新到 GitHub 仓库。";
+          " 个——其他设备 / 其他浏览器暂时看不到你的新数据！点【🚀 一键发布】直接发布，或【📤 导出 data.js】手动更新。";
         document.getElementById("unpublishedBanner").style.display = "flex";
       })
       .catch(function () { /* 本地打开或网络问题时忽略 */ });

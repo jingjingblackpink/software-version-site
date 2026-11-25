@@ -48,7 +48,9 @@
       <button class="btn" id="btnExport">📤 导出 data.js</button>
       <button class="btn" id="btnImport">📥 导入 data.js</button>
       <button class="btn" id="btnReset">🔄 重载仓库数据</button>
-      <button class="btn" id="btnGuide">🚀 发布指南</button>
+      <button class="btn" id="btnGuide">📖 发布教程</button>
+      <button class="btn btn-success" id="btnPublish">🚀 一键发布</button>
+      <button class="btn" id="btnPubCfg">⚙️ 发布设置</button>
       <input type="file" id="importFile" accept=".js,.json" style="display:none">
     </div>
 
@@ -109,7 +111,9 @@
     <div class="modal">
       <h2>🚀 发布指南：让线上网站显示最新数据</h2>
       <div class="guide-list">
-        <p><b>方法一（推荐新手）：网页手动更新</b></p>
+        <p><b>方法零（最简单）：后台一键发布 ⭐推荐</b></p>
+        <p>先在【⚙️ 发布设置】里保存一次 GitHub Token，之后每次改完数据直接点 <b>【🚀 一键发布】</b>，其他设备 1~2 分钟内自动看到最新数据。</p>
+        <p><b>方法一（备用）：网页手动更新</b></p>
         <p>1. 点击【📤 导出 data.js】下载最新数据文件；</p>
         <p>2. 打开 GitHub 仓库 → 进入 data.js 文件 → 点右上角铅笔（编辑）；</p>
         <p>3. 全选删除原内容，粘贴新文件的全部内容；</p>
@@ -124,8 +128,37 @@
     </div>
   </div>
 
+  <!-- 一键发布设置弹窗 -->
+  <div class="modal-overlay" id="publishModal">
+    <div class="modal">
+      <h2>⚙️ 一键发布设置</h2>
+      <div id="pfNote" class="pf-note" style="display:none"></div>
+      <div class="guide-list" style="font-size:13px;line-height:1.9">
+        <p>首次使用需创建一个 GitHub Token（相当于发布密码）：</p>
+        <p>1. 点下方按钮打开 GitHub Token 创建页（已自动勾选 repo 权限）</p>
+        <p>2. 拉到页面底部点 <b>Generate token</b>，复制 ghp_ 开头的令牌</p>
+        <p>3. 粘贴到下方输入框 → 点【保存设置】→ 以后每次点【🚀 一键发布】即可</p>
+        <p><a href="https://github.com/settings/tokens/new?scopes=repo&amp;description=site-publish" target="_blank" rel="noopener" class="btn btn-sm" style="display:inline-flex;margin:4px 0">🔑 去创建 Token</a></p>
+        <p style="color:#8a93a6">🔒 Token 只保存在你自己的浏览器里，不会写入网站代码；泄露了到 GitHub 撤销即可。</p>
+      </div>
+      <div class="form-group">
+        <label>GitHub Token（ghp_ 开头）</label>
+        <input id="pfToken" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>仓库（格式：用户名/仓库名）</label>
+        <input id="pfRepo" placeholder="jingjingblackpink/software-version-site">
+      </div>
+      <div class="modal-actions">
+        <button class="btn" id="pfCancel">取消</button>
+        <button class="btn btn-primary" id="pfSave">保存设置</button>
+      </div>
+    </div>
+  </div>
+
   <script src="data.js"></script>
   <script src="js/common.js"></script>
   <script src="js/admin.js"></script>
+  <script src="js/github-publish.js"></script>
 </body>
 </html>

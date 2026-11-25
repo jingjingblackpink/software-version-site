@@ -179,6 +179,19 @@ a { color: var(--primary); text-decoration: none; }
 .btn-primary:hover { background: var(--primary-dark); }
 
 .btn-danger { color: var(--danger); border-color: #f5c6c8; }
+.btn-success { background: #1a7f37; color: #fff; border-color: transparent; }
+.btn-success:hover { background: #15652c; box-shadow: 0 4px 12px rgba(26, 127, 55, .3); }
+
+.pf-note {
+  background: #ffebe9;
+  border: 1px solid #ffc2bd;
+  color: #a1260d;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
 .btn-sm { padding: 5px 10px; font-size: 12.5px; border-radius: 6px; }
 .btn-block { width: 100%; }
 .td-actions .btn { margin-right: 6px; }
