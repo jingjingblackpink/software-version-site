@@ -129,6 +129,14 @@ function escapeHtml(str) {
     .replace(/'/g, "&#39;");
 }
 
+// 规范化下载链接：缺少 http/https 前缀时自动补全，避免点击后跳到错误页面
+function normalizeUrl(u) {
+  const s = String(u == null ? "" : u).trim();
+  if (!s) return "";
+  if (/^https?:\/\//i.test(s)) return s;
+  return "https://" + s.replace(/^\/+/, "");
+}
+
 function genId() {
   return "p-" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 }

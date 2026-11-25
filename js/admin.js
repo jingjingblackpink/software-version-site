@@ -60,6 +60,15 @@
 
   document.getElementById("searchInput").addEventListener("input", render);
 
+  // ---------- 未发布提醒横幅 ----------
+  document.getElementById("unpubGuide").addEventListener("click", function () {
+    document.getElementById("guideModal").classList.add("open");
+  });
+  document.getElementById("unpubClose").addEventListener("click", function () {
+    document.getElementById("unpublishedBanner").style.display = "none";
+  });
+  checkUnpublished();
+
   // ---------- 编辑弹窗 ----------
   document.getElementById("editForm").addEventListener("submit", function (e) {
     e.preventDefault();
@@ -125,7 +134,7 @@
 
     tbody.innerHTML = list.map(function (p) {
       const dl = p.download
-        ? '<a class="btn btn-sm btn-primary" href="' + escapeHtml(p.download) + '" target="_blank" rel="noopener">⬇ 下载</a>'
+        ? '<a class="btn btn-sm btn-primary" href="' + escapeHtml(normalizeUrl(p.download)) + '" target="_blank" rel="noopener">⬇ 下载</a>'
         : '<span class="td-muted">—</span>';
       return '<tr data-id="' + escapeHtml(p.id) + '">' +
         '<td class="td-name">' + escapeHtml(p.name) + "</td>" +
@@ -170,7 +179,7 @@
     const date = document.getElementById("fDate").value;
     const version = document.getElementById("fVersion").value.trim();
     const readme = document.getElementById("fReadme").value.trim();
-    const download = document.getElementById("fDownload").value.trim();
+    const download = normalizeUrl(document.getElementById("fDownload").value);
 
     if (!name) { toast("请填写项目名称", true); return; }
     if (!date) { toast("请选择上传日期", true); return; }
@@ -195,5 +204,38 @@
     closeEditModal();
     render();
     toast("已保存 ✓ 别忘了【导出 data.js】并更新到 GitHub");
+  }
+
+  // ---------- 发布状态检测：线上 data.js 与本机数据不一致时提醒 ----------
+  function normForCompare(data) {
+    const one = function (p) {
+      return JSON.stringify({
+        id: p.id, name: p.name, date: p.date, version: p.version,
+        readme: p.readme, download: normalizeUrl(p.download)
+      });
+    };
+    const list = (data.projects || []).slice()
+      .sort(function (a, b) { return String(a.id).localeCompare(String(b.id)); })
+      .map(one);
+    return JSON.stringify(list);
+  }
+
+  function checkUnpublished() {
+    if (location.protocol === "file:") return; // 本地打开时跳过
+    fetch("data.js", { cache: "no-store" })
+      .then(function (r) {
+        return r.ok ? r.text() : Promise.reject(new Error("HTTP " + r.status));
+      })
+      .then(function (text) {
+        const remote = new Function(text + "\n;return PROJECTS_DATA;")();
+        if (normForCompare(remote) === normForCompare(state)) return;
+        const n = state.projects.length;
+        const m = (remote.projects || []).length;
+        document.getElementById("unpubText").textContent =
+          "⚠️ 有修改尚未发布到线上：本浏览器已显示 " + n + " 个项目，但线上仍是 " + m +
+          " 个——其他设备 / 其他浏览器暂时看不到你的新数据！请点【📤 导出 data.js】，再更新到 GitHub 仓库。";
+        document.getElementById("unpublishedBanner").style.display = "flex";
+      })
+      .catch(function () { /* 本地打开或网络问题时忽略 */ });
   }
 })();

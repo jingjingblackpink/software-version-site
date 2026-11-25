@@ -46,7 +46,7 @@
 
     tbody.innerHTML = list.map(function (p) {
       const dl = p.download
-        ? '<a class="btn btn-sm btn-primary" href="' + escapeHtml(p.download) + '" target="_blank" rel="noopener">⬇ 下载</a>'
+        ? '<a class="btn btn-sm btn-primary" href="' + escapeHtml(normalizeUrl(p.download)) + '" target="_blank" rel="noopener">⬇ 下载</a>'
         : '<span class="td-muted">—</span>';
       return '<tr data-id="' + escapeHtml(p.id) + '">' +
         '<td class="td-name">' + escapeHtml(p.name) + "</td>" +
