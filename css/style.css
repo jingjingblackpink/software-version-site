@@ -207,7 +207,7 @@ a { color: var(--primary); text-decoration: none; }
 
 .table-wrap { overflow-x: auto; }
 
-table { width: 100%; border-collapse: collapse; min-width: 760px; }
+table { width: 100%; border-collapse: collapse; min-width: 880px; }
 
 thead th {
   background: #f8f9fe;
@@ -240,6 +240,11 @@ tbody tr:hover { background: #fafbff; }
   border-radius: 20px;
   font-size: 12.5px;
   font-weight: 600;
+}
+
+.badge-green {
+  background: #e8f6ec;
+  color: #1a7f37;
 }
 
 .empty-row td { text-align: center; color: var(--muted); padding: 40px 0; }

@@ -164,6 +164,32 @@ function todayStr() {
   return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate());
 }
 
+// 当前本地日期时间：YYYY-MM-DDTHH:MM:SS（datetime-local 输入框默认值，含时分秒）
+function nowDatetimeLocal() {
+  const d = new Date();
+  function p(n) { return String(n).padStart(2, "0"); }
+  return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()) +
+         "T" + p(d.getHours()) + ":" + p(d.getMinutes()) + ":" + p(d.getSeconds());
+}
+
+// 把日期输入框的值规范化为 "YYYY-MM-DD HH:MM:SS" 存储格式（兼容旧数据）
+function normalizeDateValue(v) {
+  let s = String(v == null ? "" : v).trim();
+  if (!s) return "";
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) s += "T00:00:00";       // 旧格式：纯日期补 0 点
+  s = s.replace("T", " ");
+  if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(s)) s += ":00"; // 只到分钟则补秒
+  return s;
+}
+
+// 把存储的日期转回 datetime-local 输入框值（YYYY-MM-DDTHH:MM:SS）
+function dateToInputValue(s) {
+  let v = String(s == null ? "" : s).trim();
+  if (!v) return nowDatetimeLocal();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(v)) v += " 00:00:00";
+  return v.replace(" ", "T");
+}
+
 function toast(msg, isError) {
   const t = document.createElement("div");
   t.className = "toast" + (isError ? " toast-err" : "");
@@ -177,13 +203,17 @@ function toast(msg, isError) {
 }
 
 // README 查看弹窗（admin / client 共用）
-function showReadmeModal(name, version, readme) {
+function showReadmeModal(name, version, readme, screenVersion) {
   const overlay = document.createElement("div");
   overlay.className = "modal-overlay open";
+  let badges = '<span class="badge">' + escapeHtml(version || "—") + "</span>";
+  if (screenVersion) {
+    badges += ' <span class="badge badge-green">屏幕 ' + escapeHtml(screenVersion) + "</span>";
+  }
   overlay.innerHTML =
     '<div class="modal">' +
     '  <h2>📖 README 信息</h2>' +
-    '  <p class="td-muted" style="margin-bottom:10px">' + escapeHtml(name) + ' · <span class="badge">' + escapeHtml(version || "—") + "</span></p>" +
+    '  <p class="td-muted" style="margin-bottom:10px">' + escapeHtml(name) + " · " + badges + "</p>" +
     '  <div class="readme-body">' + escapeHtml(readme || "（暂无 README 信息）") + "</div>" +
     '  <div class="modal-actions"><button class="btn" id="rmClose">关 闭</button></div>' +
     "</div>";

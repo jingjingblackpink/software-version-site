@@ -18,7 +18,7 @@
     const p = state.projects.find(function (x) { return x.id === tr.dataset.id; });
     if (!p) return;
     if (e.target.classList.contains("btn-readme")) {
-      showReadmeModal(p.name, p.version, p.readme);
+      showReadmeModal(p.name, p.version, p.readme, p.screenVersion);
     }
   });
 
@@ -38,7 +38,7 @@
     const tbody = document.getElementById("tableBody");
     if (!list.length) {
       tbody.innerHTML =
-        '<tr class="empty-row"><td colspan="5">' +
+        '<tr class="empty-row"><td colspan="6">' +
         (kw ? "未找到匹配的项目" : "暂无公开项目") +
         "</td></tr>";
       return;
@@ -48,10 +48,14 @@
       const dl = p.download
         ? '<a class="btn btn-sm btn-primary" href="' + escapeHtml(normalizeUrl(p.download)) + '" target="_blank" rel="noopener">⬇ 下载</a>'
         : '<span class="td-muted">—</span>';
+      const screen = p.screenVersion
+        ? '<span class="badge badge-green">' + escapeHtml(p.screenVersion) + "</span>"
+        : '<span class="td-muted">—</span>';
       return '<tr data-id="' + escapeHtml(p.id) + '">' +
         '<td class="td-name">' + escapeHtml(p.name) + "</td>" +
         "<td>" + escapeHtml(p.date || "—") + "</td>" +
         '<td><span class="badge">' + escapeHtml(p.version || "—") + "</span></td>" +
+        "<td>" + screen + "</td>" +
         '<td><button class="btn btn-sm btn-readme">📖 查看</button></td>' +
         "<td>" + dl + "</td></tr>";
     }).join("");

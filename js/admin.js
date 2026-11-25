@@ -86,7 +86,7 @@
     const p = state.projects.find(function (x) { return x.id === tr.dataset.id; });
     if (!p) return;
     if (e.target.classList.contains("btn-readme")) {
-      showReadmeModal(p.name, p.version, p.readme);
+      showReadmeModal(p.name, p.version, p.readme, p.screenVersion);
     } else if (e.target.classList.contains("btn-edit")) {
       openEditModal(p);
     } else if (e.target.classList.contains("btn-del")) {
@@ -126,7 +126,7 @@
     const tbody = document.getElementById("tableBody");
     if (!list.length) {
       tbody.innerHTML =
-        '<tr class="empty-row"><td colspan="6">' +
+        '<tr class="empty-row"><td colspan="7">' +
         (kw ? "未找到匹配的项目" : "暂无项目，点击【➕ 新增项目】添加") +
         "</td></tr>";
       return;
@@ -136,10 +136,14 @@
       const dl = p.download
         ? '<a class="btn btn-sm btn-primary" href="' + escapeHtml(normalizeUrl(p.download)) + '" target="_blank" rel="noopener">⬇ 下载</a>'
         : '<span class="td-muted">—</span>';
+      const screen = p.screenVersion
+        ? '<span class="badge badge-green">' + escapeHtml(p.screenVersion) + "</span>"
+        : '<span class="td-muted">—</span>';
       return '<tr data-id="' + escapeHtml(p.id) + '">' +
         '<td class="td-name">' + escapeHtml(p.name) + "</td>" +
         "<td>" + escapeHtml(p.date || "—") + "</td>" +
         '<td><span class="badge">' + escapeHtml(p.version || "—") + "</span></td>" +
+        "<td>" + screen + "</td>" +
         '<td><button class="btn btn-sm btn-readme">📖 查看</button></td>' +
         "<td>" + dl + "</td>" +
         '<td class="td-actions">' +
@@ -162,8 +166,9 @@
     editingId = p ? p.id : null;
     document.getElementById("modalTitle").textContent = p ? "✏️ 编辑项目" : "➕ 新增项目";
     document.getElementById("fName").value = p ? (p.name || "") : "";
-    document.getElementById("fDate").value = p ? (p.date || "") : todayStr();
+    document.getElementById("fDate").value = p ? dateToInputValue(p.date) : nowDatetimeLocal();
     document.getElementById("fVersion").value = p ? (p.version || "") : "";
+    document.getElementById("fScreen").value = p ? (p.screenVersion || "") : "";
     document.getElementById("fReadme").value = p ? (p.readme || "") : "";
     document.getElementById("fDownload").value = p ? (p.download || "") : "";
     document.getElementById("editModal").classList.add("open");
@@ -176,8 +181,9 @@
 
   function saveEdit() {
     const name = document.getElementById("fName").value.trim();
-    const date = document.getElementById("fDate").value;
+    const date = normalizeDateValue(document.getElementById("fDate").value);
     const version = document.getElementById("fVersion").value.trim();
+    const screenVersion = document.getElementById("fScreen").value.trim();
     const readme = document.getElementById("fReadme").value.trim();
     const download = normalizeUrl(document.getElementById("fDownload").value);
 
@@ -187,7 +193,12 @@
     if (editingId) {
       const p = state.projects.find(function (x) { return x.id === editingId; });
       if (p) {
-        p.name = name; p.date = date; p.version = version; p.readme = readme; p.download = download;
+        p.name = name;
+        p.date = date;
+        p.version = version;
+        p.screenVersion = screenVersion;
+        p.readme = readme;
+        p.download = download;
       }
     } else {
       state.projects.push({
@@ -195,6 +206,7 @@
         name: name,
         date: date,
         version: version,
+        screenVersion: screenVersion,
         readme: readme,
         download: download
       });
