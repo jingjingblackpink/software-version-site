@@ -1,8 +1,8 @@
 // data.js —— 软件版本管理网站数据文件
-// 本文件由管理后台于 2026/11/25 18:14:44 自动导出
+// 本文件由管理后台于 2026/11/26 09:59:41 自动导出
 // 用法：在 GitHub 仓库中打开 data.js → 编辑 → 用本文件全部内容替换 → Commit，约 1 分钟后线上生效
 const PROJECTS_DATA = {
-  "updatedAt": "2026-11-25T10:14:40.855Z",
+  "updatedAt": "2026-11-26T01:59:34.224Z",
   "projects": [
     {
       "id": "p-mwvklit6buqv",
@@ -39,6 +39,24 @@ const PROJECTS_DATA = {
       "screenVersion": "V1.0.8",
       "readme": "26/11/11 新UI（PID原算法）1.06 heatonly_261105\n单片机版本：V1.1.3，串口屏版本：V1.0.8\n1，优化启动耗时，减小蜂鸣器鸣叫时长",
       "download": "https://pan.baidu.com/s/1JtHfBmvuFoj0gsZB1RC8Tg"
+    },
+    {
+      "id": "p-mwwwj5gkfckr",
+      "name": "涡旋仪V5-PRO",
+      "date": "2026-11-26 09:54:56",
+      "version": "YQ-2401_05_涡旋振荡仪软件-V2.3-20260720",
+      "screenVersion": "V2.5",
+      "readme": "26/5/19\n1，中文版本增加操作手册二维码 \n2，英文版本增加操作手册二维码 \n3，软件版本号：V2.5",
+      "download": "https://pan.baidu.com/s/1Fx-HYECi3lYeGHyA0Aq3ow"
+    },
+    {
+      "id": "p-mwwwmt00f763",
+      "name": "涡旋仪V5-PRO-爱津生物",
+      "date": "2026-11-26 09:57:24",
+      "version": "YQ-2401_05_aijin涡旋振荡仪软件-V1.0-20260810",
+      "screenVersion": "V1.0",
+      "readme": "26/7/16\n1，中文版本修改为爱津智能涡旋仪版本\n2，英文版本修改为爱津智能涡旋仪版本\n3，软件版本号：V1.0",
+      "download": "https://pan.baidu.com/s/1MZXyRD4ZGMXO6NkaZB4iTQ"
     }
   ]
 };
