@@ -1,8 +1,8 @@
 // data.js —— 软件版本管理网站数据文件
-// 本文件由管理后台于 2026/11/26 09:59:41 自动导出
+// 本文件由管理后台于 2026/11/26 15:53:18 自动导出
 // 用法：在 GitHub 仓库中打开 data.js → 编辑 → 用本文件全部内容替换 → Commit，约 1 分钟后线上生效
 const PROJECTS_DATA = {
-  "updatedAt": "2026-11-26T01:59:34.224Z",
+  "updatedAt": "2026-11-26T07:53:10.705Z",
   "projects": [
     {
       "id": "p-mwvklit6buqv",
@@ -57,6 +57,15 @@ const PROJECTS_DATA = {
       "screenVersion": "V1.0",
       "readme": "26/7/16\n1，中文版本修改为爱津智能涡旋仪版本\n2，英文版本修改为爱津智能涡旋仪版本\n3，软件版本号：V1.0",
       "download": "https://pan.baidu.com/s/1MZXyRD4ZGMXO6NkaZB4iTQ"
+    },
+    {
+      "id": "p-mwx99jqp6wrl",
+      "name": "金属浴B5-PRO软件",
+      "date": "2026-11-26 15:51:07",
+      "version": "金属浴B5-PRO软件-V1.1.3-261126",
+      "screenVersion": "V1.0.7",
+      "readme": "26/11/26 新UI（PID原算法）1.06 heatonly_261105\n单片机版本：V1.1.3，串口屏版本：V1.0.7\n1，程控结束，蜂鸣器一直三声短鸣",
+      "download": "https://pan.baidu.com/s/1kBxNzH_f0Zq5JcWALy5vww"
     }
   ]
 };
